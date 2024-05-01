@@ -53,6 +53,7 @@ public class ProductsController : Controller
         return View();
     }
 
+    [ServiceFilter(typeof(NotFoundFilter<Product>))]
     public async Task<IActionResult> Update(int id)
     {
         var product = await _services.GetByIdAsync(id);
