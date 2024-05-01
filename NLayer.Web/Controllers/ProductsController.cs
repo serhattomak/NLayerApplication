@@ -13,10 +13,11 @@ public class ProductsController : Controller
     private readonly ICategoryService _categoryService;
     private readonly IMapper _mapper;
 
-    public ProductsController(IProductService services, IMapper mapper)
+    public ProductsController(IProductService services, IMapper mapper, ICategoryService categoryService)
     {
         _services = services;
         _mapper = mapper;
+        _categoryService = categoryService;
     }
 
     public async Task<IActionResult> Index()
@@ -28,7 +29,7 @@ public class ProductsController : Controller
     {
         var categories = await _categoryService.GetAllAsync();
 
-        var categoriesDto = _mapper.Map<List<CategoryDto>>(categories);
+        var categoriesDto = _mapper.Map<List<CategoryDto>>(categories.ToList());
 
         ViewBag.Categories = new SelectList(categoriesDto, "Id", "Name");
 
@@ -45,7 +46,7 @@ public class ProductsController : Controller
         }
         var categories = await _categoryService.GetAllAsync();
 
-        var categoriesDto = _mapper.Map<List<CategoryDto>>(categories);
+        var categoriesDto = _mapper.Map<List<CategoryDto>>(categories.ToList());
 
         ViewBag.Categories = new SelectList(categoriesDto, "Id", "Name");
 

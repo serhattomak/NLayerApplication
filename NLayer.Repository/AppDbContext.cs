@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using NLayer.Core.Models;
+using System.Reflection;
 
 namespace NLayer.Repository
 {
-    public class AppDbContext:DbContext
+    public class AppDbContext : DbContext
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options):base(options)
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
 
@@ -23,8 +18,8 @@ namespace NLayer.Repository
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             modelBuilder.Entity<ProductFeature>().HasData(new ProductFeature()
-                { Id = 1, Color = "Red", Height = 100, Width = 200, ProductId = 1 }, new ProductFeature()
-                { Id = 2, Color = "Blue", Height = 300, Width = 500, ProductId = 2 });
+            { Id = 1, Color = "Red", Height = 100, Width = 200, ProductId = 1 }, new ProductFeature()
+            { Id = 2, Color = "Blue", Height = 300, Width = 500, ProductId = 2 });
             base.OnModelCreating(modelBuilder);
         }
     }
