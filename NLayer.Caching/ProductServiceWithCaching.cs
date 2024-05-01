@@ -28,7 +28,7 @@ public class ProductServiceWithCaching : IProductService
 
         if (!_memoryCache.TryGetValue(CacheProductKey, out _))
         {
-            _memoryCache.Set(CacheProductKey, _repository.GetProductsWithCategory());
+            _memoryCache.Set(CacheProductKey, _repository.GetProductsWithCategory().Result);
         }
     }
 
@@ -60,7 +60,8 @@ public class ProductServiceWithCaching : IProductService
 
     public Task<IEnumerable<Product>> GetAllAsync()
     {
-        return Task.FromResult(_memoryCache.Get<IEnumerable<Product>>(CacheProductKey));
+        var products = _memoryCache.Get<IEnumerable<Product>>(CacheProductKey);
+        return Task.FromResult(products);
     }
 
     public IQueryable<Product> Where(Expression<Func<Product, bool>> expression)
